@@ -1817,16 +1817,6 @@ function commaSep1(rule) {
   )
 }
 
-// function namedCommaSep1(field_name, rule) {
-//   return seq(
-//     field(field_name, rule),
-//     repeat(seq(
-//       ',',
-//       field(field_name, rule)
-//     ))
-//   )
-// }
-
 function optional_with_placeholder(field_name, rule) {
   return choice(field(field_name, rule), field(field_name, blank()));
 }
