@@ -85,6 +85,8 @@ module.exports = grammar({
     [$.array_creation_expression, $.element_access_expression], 
     
     [$.if_statement]
+
+    // [$.async_modifier]
   ],
 
   inline: $ => [
@@ -149,7 +151,7 @@ module.exports = grammar({
     using_directive: $ => seq(
       'using',
       optional(choice(
-        'static',
+        $.static_modifier,
         $.name_equals
       )),
       $._name,
@@ -235,9 +237,12 @@ module.exports = grammar({
       ';'
     )),
 
+    async_modifier: $ => 'async',
+    static_modifier: $ => 'static', 
+  
     modifier: $ => prec.right(choice(
       'abstract',
-      'async',
+      $.async_modifier,
       'const',
       'extern',
       'fixed',
@@ -251,7 +256,7 @@ module.exports = grammar({
       'readonly',
       prec(1, 'ref'), //make sure that 'ref' is treated as a modifier for local variable declarations instead of as a ref expression
       'sealed',
-      'static',
+      $.static_modifier,
       'unsafe',
       'virtual',
       'volatile'
@@ -385,9 +390,11 @@ module.exports = grammar({
       optional_with_placeholder('attribute_list_placeholder', repeat($.attribute_list)),
       optional_with_placeholder('modifier_list', repeat($.modifier)),
       field('type', $.return_type),
-      optional($.explicit_interface_specifier),
-      field('name', $.identifier),
-      field('type_parameters', optional($.type_parameter_list)),
+      field('method_name', seq(
+        optional($.explicit_interface_specifier),
+        $.identifier
+      )),
+      optional(field('type_parameters', $.type_parameter_list)),
       field('parameters', $.parameter_block),
       optional_with_placeholder('type_parameter_constraints_clause_placeholder', repeat($.type_parameter_constraints_clause)),
       field('method_body', $.function_body),
@@ -524,7 +531,7 @@ module.exports = grammar({
 
     enum_member_declaration_block: $ => seq(
       '{',
-      field('enum_member_declaration_list', seq(
+      optional_with_placeholder('enum_member_declaration_list', seq(
         commaSep($.enum_member_declaration),
         optional(',')
       )),
@@ -560,7 +567,7 @@ module.exports = grammar({
       optional_with_placeholder('modifier_list', repeat($.modifier)),
       'interface',
       field('name', $.identifier),
-      field('type_parameters', optional($.type_parameter_list)),
+      optional(field('type_parameters', $.type_parameter_list)),
       optional_with_placeholder('bases_list_optional', $.base_list),
       optional_with_placeholder('type_parameter_constraints_clause_placeholder', repeat($.type_parameter_constraints_clause)),
       field('body', $.declaration_list),
@@ -572,7 +579,7 @@ module.exports = grammar({
       optional_with_placeholder('modifier_list', repeat($.modifier)),
       'struct',
       field('name', $.identifier),
-      field('type_parameters', optional($.type_parameter_list)),
+      optional(field('type_parameters', $.type_parameter_list)),
       optional_with_placeholder('bases_list_optional', $.base_list),
       optional_with_placeholder('type_parameter_constraints_clause_placeholder', repeat($.type_parameter_constraints_clause)),
       field('body', $.declaration_list),
@@ -585,7 +592,7 @@ module.exports = grammar({
       'delegate',
       field('type', $.return_type),
       field('name', $.identifier),
-      field('type_parameters', optional($.type_parameter_list)),
+      optional(field('type_parameters', $.type_parameter_list)),
       field('parameters', $.parameter_block),
       optional_with_placeholder('type_parameter_constraints_clause_placeholder', repeat($.type_parameter_constraints_clause)),
       ';'
@@ -596,7 +603,7 @@ module.exports = grammar({
       optional_with_placeholder('modifier_list', repeat($.modifier)),
       'record',
       field('name', $.identifier),
-      field('type_parameters', optional($.type_parameter_list)),
+      optional(field('type_parameters', $.type_parameter_list)),
       field('parameters', optional($.parameter_block)),
       field('bases', optional(alias($.record_base, $.base_list))),
       optional_with_placeholder('type_parameter_constraints_clause_placeholder', repeat($.type_parameter_constraints_clause)),
@@ -804,7 +811,7 @@ module.exports = grammar({
       'in',
       field('for_each_right', $._expression),
       ')',
-      field('body', $._statement)
+      field('for_each_body', $._statement)
     ),
 
     // grammar.txt one doesn't seem to make sense so we do this instead
@@ -817,18 +824,6 @@ module.exports = grammar({
       ),
       ';'
     ),
-
-    // if_statement: $ => prec.right(seq(
-    //   'if',
-    //   '(',
-    //   field('condition', $._expression),
-    //   ')',
-    //   field('consequence', $._statement),
-    //   optional(seq(
-    //     'else',
-    //     field('alternative', $._statement)
-    //   ))
-    // )),
 
     if_statement: $ => seq(
       $.if_clause,
@@ -877,7 +872,7 @@ module.exports = grammar({
       optional_with_placeholder('modifier_list', repeat($.modifier)),
       field('type', $.return_type),
       field('name', $.identifier),
-      field('type_parameters', optional($.type_parameter_list)),
+      optional(field('type_parameters', $.type_parameter_list)),
       field('parameters', $.parameter_block),
       optional_with_placeholder('type_parameter_constraints_clause_placeholder', repeat($.type_parameter_constraints_clause)),
       $.function_body
@@ -1026,7 +1021,7 @@ module.exports = grammar({
       'try',
       field('try_body', $.block),
       optional_with_placeholder('catch_list', repeat($.catch_clause)),
-      optional($.finally_clause),
+      optional_with_placeholder('finally_placeholder', $.finally_clause),
     ),
 
     catch_clause: $ => seq(
@@ -1078,18 +1073,22 @@ module.exports = grammar({
     ),
 
     anonymous_method_expression: $ => seq(
-      optional('async'),
+      optional($.async_modifier),
       'delegate',
       optional($.parameter_block),
       $.block
     ),
 
     lambda_expression: $ => prec(-1, seq(
-      optional('async'),
-      optional('static'),
-      choice($.parameter_block, $.identifier),
+      optional_with_placeholder('modifier_list', seq(
+        optional($.async_modifier),
+        optional($.static_modifier)
+      )),
+      choice($.parameter_block, 
+        field('lambda_parameter', $.identifier)),
       '=>',
-      field('body', choice($.block, $._expression))
+      choice($.block, 
+        field('lambda_single_expression_body', $._expression))
     )),
 
     anonymous_object_creation_expression: $ => seq(
