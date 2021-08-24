@@ -85,8 +85,6 @@ module.exports = grammar({
     [$.array_creation_expression, $.element_access_expression], 
     
     [$.if_statement]
-
-    // [$.async_modifier]
   ],
 
   inline: $ => [
