@@ -595,18 +595,23 @@
     }
   },
   {
-    "type": "argument_list",
+    "type": "argument_list_parens",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "argument",
-          "named": true
-        }
-      ]
+    "fields": {
+      "argument_list": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -1716,7 +1721,7 @@
       "required": true,
       "types": [
         {
-          "type": "argument_list",
+          "type": "argument_list_parens",
           "named": true
         }
       ]
@@ -3021,7 +3026,7 @@
       "required": true,
       "types": [
         {
-          "type": "argument_list",
+          "type": "argument_list_parens",
           "named": true
         },
         {
@@ -3313,7 +3318,7 @@
         "required": true,
         "types": [
           {
-            "type": "argument_list",
+            "type": "argument_list_parens",
             "named": true
           }
         ]
@@ -4071,7 +4076,7 @@
         "required": false,
         "types": [
           {
-            "type": "argument_list",
+            "type": "argument_list_parens",
             "named": true
           }
         ]
@@ -4671,7 +4676,7 @@
       "required": true,
       "types": [
         {
-          "type": "argument_list",
+          "type": "argument_list_parens",
           "named": true
         },
         {

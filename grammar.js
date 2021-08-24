@@ -343,10 +343,13 @@ module.exports = grammar({
     constructor_initializer: $ => seq(
       ':',
       choice('base', 'this'),
-      $.argument_list
+      $.argument_list_parens
     ),
 
-    argument_list: $ => seq('(', commaSep($.argument), ')'),
+    argument_list_parens: $ => seq('(', 
+      optional_with_placeholder('argument_list', commaSep($.argument)), 
+      ')'
+    ),
 
     block: $ => seq(
       '{', 
@@ -615,7 +618,7 @@ module.exports = grammar({
 
     primary_constructor_base_type: $ => seq(
       $.identifier,
-      $.argument_list
+      $.argument_list_parens
     ),
 
     _record_body: $ => choice(
@@ -1099,7 +1102,7 @@ module.exports = grammar({
 
     implicit_object_creation_expression: $ => seq(
       'new',
-      $.argument_list,
+      $.argument_list_parens,
       optional($.initializer_expression)
     ),
 
@@ -1243,7 +1246,7 @@ module.exports = grammar({
 
     invocation_expression: $ => prec(PREC.INVOCATION, seq(
       field('function', $._expression),
-      field('arguments', $.argument_list)
+      field('arguments', $.argument_list_parens)
     )),
 
     is_pattern_expression: $ => prec.left(PREC.EQUAL, seq(
@@ -1273,7 +1276,7 @@ module.exports = grammar({
     object_creation_expression: $ => prec.right(seq(
       'new',
       field('type', $._type),
-      field('arguments', optional($.argument_list)),
+      field('arguments', optional($.argument_list_parens)),
       field('initializer', optional($.initializer_expression))
     )),
 
