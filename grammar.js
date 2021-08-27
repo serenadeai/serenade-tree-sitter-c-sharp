@@ -881,7 +881,13 @@ module.exports = grammar({
 
     lock_statement: $ => seq('lock', '(', $._expression, ')', $._statement),
 
-    return_statement: $ => seq('return', optional($._expression), ';'),
+    return_statement: $ => seq(
+      'return', 
+      optional_with_placeholder('return_value_optional', $.return_value), 
+      ';'
+    ),
+
+    return_value: $ => $._expression,
 
     switch_statement: $ => seq(
       'switch',
@@ -1019,10 +1025,14 @@ module.exports = grammar({
     throw_statement: $ => seq('throw', optional($._expression), ';'),
 
     try_statement: $ => seq(
-      'try',
-      field('try_body', $.block),
+      $.try_clause,
       optional_with_placeholder('catch_list', repeat($.catch_clause)),
       optional_with_placeholder('finally_placeholder', $.finally_clause),
+    ),
+    
+    try_clause: $ => seq(
+      'try', 
+      $.block
     ),
 
     catch_clause: $ => seq(
