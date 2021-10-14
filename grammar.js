@@ -48,7 +48,7 @@ module.exports = grammar({
   conflicts: $ => [
     [$.brace_enclosed_body, $.initializer_expression],
 
-    [$.event_declaration, $.variable_declarator],
+    [$.event_declaration, $.assignment],
 
     [$.nullable_type, $.as_expression],
     [$.nullable_type, $.is_expression, $.type_pattern],
@@ -78,7 +78,7 @@ module.exports = grammar({
     [$.parameter, $.declaration_expression],
     [$.tuple_element],
     [$.tuple_element, $.declaration_expression],
-    [$.tuple_element, $.variable_declarator],
+    [$.tuple_element, $.assignment],
 
     [$.array_creation_expression, $.element_access_expression], 
     
@@ -231,7 +231,7 @@ module.exports = grammar({
       optional_with_placeholder('attribute_list_placeholder', repeat($.attribute_list)),
       optional_with_placeholder('modifier_list', repeat($.modifier)),
       'event',
-      $.assignment,
+      $.assignment_with_type,
       ';'
     )),
 
@@ -260,15 +260,17 @@ module.exports = grammar({
       'volatile'
     )),
 
-    assignment: $ => seq(
+    assignment_with_type: $ => seq(
       field('type_optional', $.type),
-      commaSep1($.variable_declarator)
+      $.assignment_list
     ),
 
-    variable_declarator: $ => seq(
+    assignment_list: $ => commaSep1($.assignment), 
+
+    assignment: $ => seq(
       field('assignment_variable', choice($.identifier, $.tuple_pattern)),
       optional($.bracketed_argument_list),
-      optional($.equals_value_clause)
+      optional_with_placeholder('assignment_value_list_optional', $.equals_value_clause)
     ),
 
     bracketed_argument_list: $ => seq(
@@ -297,7 +299,7 @@ module.exports = grammar({
     field_declaration: $ => seq(
       optional_with_placeholder('attribute_list_placeholder', repeat($.attribute_list)),
       optional_with_placeholder('modifier_list', repeat($.modifier)),
-      $.assignment,
+      $.assignment_with_type,
       ';'
     ),
 
@@ -794,11 +796,11 @@ module.exports = grammar({
 
     expression_statement: $ => seq($._expression, ';'),
 
-    fixed_statement: $ => seq('fixed', '(', $.assignment, ')', $.statement),
+    fixed_statement: $ => seq('fixed', '(', $.assignment_with_type, ')', $.statement),
 
     condition: $ => $._expression, 
 
-    block_initializer: $ => choice($.assignment, commaSep1($._expression)), 
+    block_initializer: $ => choice($.assignment_with_type, commaSep1($._expression)), 
 
     block_update: $ => commaSep1($._expression), 
 
@@ -888,7 +890,7 @@ module.exports = grammar({
       optional('await'),
       optional('using'),
       optional_with_placeholder('modifier_list', repeat($.modifier)),
-      $.assignment,
+      $.assignment_with_type,
       ';'
     ),
 
@@ -1085,7 +1087,7 @@ module.exports = grammar({
       optional('await'),
       'using',
       '(',
-      choice($.assignment, $._expression),
+      choice($.assignment_with_type, $._expression),
       ')',
       field('body', $.statement)
     ),

@@ -573,23 +573,37 @@
     "type": "assignment",
     "named": true,
     "fields": {
-      "type_optional": {
+      "assignment_value_list_optional": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "equals_value_clause",
+            "named": true
+          }
+        ]
+      },
+      "assignment_variable": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "type",
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "tuple_pattern",
             "named": true
           }
         ]
       }
     },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
         {
-          "type": "variable_declarator",
+          "type": "bracketed_argument_list",
           "named": true
         }
       ]
@@ -632,9 +646,50 @@
     }
   },
   {
+    "type": "assignment_list",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "assignment_operator",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "assignment_with_type",
+    "named": true,
+    "fields": {
+      "type_optional": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "assignment_list",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "async_modifier",
@@ -1037,7 +1092,7 @@
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "assignment_with_type",
           "named": true
         }
       ]
@@ -2316,7 +2371,7 @@
       "required": true,
       "types": [
         {
-          "type": "assignment",
+          "type": "assignment_with_type",
           "named": true
         }
       ]
@@ -2429,7 +2484,7 @@
       "required": true,
       "types": [
         {
-          "type": "assignment",
+          "type": "assignment_with_type",
           "named": true
         }
       ]
@@ -2459,7 +2514,7 @@
       "required": true,
       "types": [
         {
-          "type": "assignment",
+          "type": "assignment_with_type",
           "named": true
         },
         {
@@ -3494,7 +3549,7 @@
       "required": true,
       "types": [
         {
-          "type": "assignment",
+          "type": "assignment_with_type",
           "named": true
         }
       ]
@@ -6112,7 +6167,7 @@
           "named": true
         },
         {
-          "type": "assignment",
+          "type": "assignment_with_type",
           "named": true
         }
       ]
@@ -6136,40 +6191,6 @@
         },
         {
           "type": "parenthesized_variable_designation",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "variable_declarator",
-    "named": true,
-    "fields": {
-      "assignment_variable": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "tuple_pattern",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "bracketed_argument_list",
-          "named": true
-        },
-        {
-          "type": "equals_value_clause",
           "named": true
         }
       ]
