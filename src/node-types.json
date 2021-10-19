@@ -1329,16 +1329,6 @@
     "type": "catch_declaration",
     "named": true,
     "fields": {
-      "name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "type_optional": {
         "multiple": false,
         "required": true,
@@ -1349,6 +1339,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3937,6 +3937,46 @@
     }
   },
   {
+    "type": "namespace_member_declaration",
+    "named": true,
+    "fields": {
+      "statement": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "class",
+            "named": true
+          },
+          {
+            "type": "delegate_declaration",
+            "named": true
+          },
+          {
+            "type": "enum",
+            "named": true
+          },
+          {
+            "type": "interface",
+            "named": true
+          },
+          {
+            "type": "namespace_declaration",
+            "named": true
+          },
+          {
+            "type": "record_declaration",
+            "named": true
+          },
+          {
+            "type": "struct_declaration",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "negated_pattern",
     "named": true,
     "fields": {},
@@ -4682,31 +4722,7 @@
         "required": false,
         "types": [
           {
-            "type": "class",
-            "named": true
-          },
-          {
-            "type": "delegate_declaration",
-            "named": true
-          },
-          {
-            "type": "enum",
-            "named": true
-          },
-          {
-            "type": "interface",
-            "named": true
-          },
-          {
-            "type": "namespace_declaration",
-            "named": true
-          },
-          {
-            "type": "record_declaration",
-            "named": true
-          },
-          {
-            "type": "struct_declaration",
+            "type": "namespace_member_declaration",
             "named": true
           },
           {
@@ -5770,16 +5786,6 @@
     "type": "tuple_element",
     "named": true,
     "fields": {
-      "name": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
       "type_optional": {
         "multiple": false,
         "required": true,
@@ -5790,6 +5796,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
     }
   },
   {

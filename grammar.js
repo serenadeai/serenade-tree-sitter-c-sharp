@@ -103,7 +103,7 @@ module.exports = grammar({
       optional_with_placeholder('global_attributes_list', repeat($.global_attribute_list)),
       optional_with_placeholder('statement_list', seq(
         repeat($.top_level_statement),
-        repeat($._namespace_member_declaration)
+        repeat($.namespace_member_declaration)
       ))
     ),
 
@@ -130,10 +130,10 @@ module.exports = grammar({
       $.using_directive,
     ),
 
-    _namespace_member_declaration: $ => choice(
+    namespace_member_declaration: $ => field('statement', choice(
       $.namespace_declaration,
       $._type_declaration
-    ),
+    )),
 
     _type_declaration: $ => choice(
       $.class,
@@ -622,8 +622,8 @@ module.exports = grammar({
       'record',
       field('name', $.identifier),
       optional($.type_parameter_list),
-      field('parameters', optional($.parameter_block)),
-      field('bases', optional(alias($.record_base, $.base_list))),
+      optional(field('parameters', $.parameter_block)),
+      optional(field('bases', alias($.record_base, $.base_list))),
       optional_with_placeholder('type_parameter_constraint_list_optional', $.type_parameter_constraint_list),
       field('body', $._record_body),
     ),
@@ -755,7 +755,7 @@ module.exports = grammar({
 
     tuple_element: $ => prec.left(seq(
       field('type_optional', $.type),
-      field('name', optional($.identifier))
+      optional($.identifier)
     )),
 
     statement: $ => choice(
@@ -1073,7 +1073,7 @@ module.exports = grammar({
     catch_declaration: $ => seq(
       '(',
       field('type_optional', $.type),
-      field('name', optional($.identifier)),
+      optional($.identifier), // name
       ')'
     ),
 
@@ -1314,8 +1314,8 @@ module.exports = grammar({
     object_creation_expression: $ => prec.right(seq(
       'new',
       field('type_optional', $.type),
-      field('arguments', optional($.argument_list_parens)),
-      field('initializer', optional($.initializer_expression))
+      optional(field('arguments', $.argument_list_parens)),
+      optional(field('initializer', $.initializer_expression))
     )),
 
     parenthesized_expression: $ => seq('(', $._expression, ')'),
