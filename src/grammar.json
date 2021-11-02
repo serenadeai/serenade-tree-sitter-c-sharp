@@ -105,81 +105,85 @@
       "name": "statement"
     },
     "declaration_": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "class"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "constructor_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "conversion_operator_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "delegate_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "destructor_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "enum"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "event_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "event_field_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "field_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "indexer_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "interface"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "method"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "namespace_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "operator_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "property_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "record_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "struct_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "using"
-        }
-      ]
+      "type": "FIELD",
+      "name": "member",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "class"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "constructor_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "conversion_operator_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "delegate_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "destructor_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "enum"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "event_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "event_field_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "field_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "indexer_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "interface"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "method"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "namespace_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "operator_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "property_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "record_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "struct_declaration"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "using"
+          }
+        ]
+      }
     },
     "namespace_member_declaration": {
       "type": "FIELD",
@@ -3083,8 +3087,13 @@
                         "type": "SEQ",
                         "members": [
                           {
-                            "type": "SYMBOL",
-                            "name": "enum_member_declaration"
+                            "type": "ALIAS",
+                            "content": {
+                              "type": "SYMBOL",
+                              "name": "enum_member_declaration"
+                            },
+                            "named": true,
+                            "value": "member"
                           },
                           {
                             "type": "REPEAT",
@@ -3096,8 +3105,13 @@
                                   "value": ","
                                 },
                                 {
-                                  "type": "SYMBOL",
-                                  "name": "enum_member_declaration"
+                                  "type": "ALIAS",
+                                  "content": {
+                                    "type": "SYMBOL",
+                                    "name": "enum_member_declaration"
+                                  },
+                                  "named": true,
+                                  "value": "member"
                                 }
                               ]
                             }

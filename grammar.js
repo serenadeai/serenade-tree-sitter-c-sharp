@@ -107,7 +107,7 @@ module.exports = grammar({
 
     top_level_statement: $ => $.statement,
 
-    declaration_: $ => choice(
+    declaration_: $ => field('member', choice(
       $.class,
       $.constructor_declaration,
       $.conversion_operator_declaration,
@@ -126,7 +126,7 @@ module.exports = grammar({
       $.record_declaration,
       $.struct_declaration,
       $.using,
-    ),
+    )),
 
     namespace_member_declaration: $ => field('statement', choice(
       $.namespace_declaration,
@@ -535,7 +535,7 @@ module.exports = grammar({
     enum_member_block: $ => seq(
       '{',
       optional_with_placeholder('enum_member_list', seq(
-        commaSep($.enum_member_declaration),
+        commaSep(alias($.enum_member_declaration, $.member)),
         optional(',')
       )),
       '}',
