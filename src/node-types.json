@@ -4855,28 +4855,22 @@
             "named": true
           }
         ]
-      },
-      "value": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "arrow_expression_clause",
-            "named": true
-          },
-          {
-            "type": "expression_",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
+          "type": "arrow_expression_clause",
+          "named": true
+        },
+        {
           "type": "explicit_interface_specifier",
+          "named": true
+        },
+        {
+          "type": "expression_",
           "named": true
         }
       ]
@@ -5684,21 +5678,21 @@
             "named": true
           }
         ]
-      },
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression_",
-            "named": true
-          },
-          {
-            "type": "tuple_expression",
-            "named": true
-          }
-        ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression_",
+          "named": true
+        },
+        {
+          "type": "tuple_expression",
+          "named": true
+        }
+      ]
     }
   },
   {

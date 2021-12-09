@@ -2882,12 +2882,8 @@
                           "value": "="
                         },
                         {
-                          "type": "FIELD",
-                          "name": "value",
-                          "content": {
-                            "type": "SYMBOL",
-                            "name": "expression_"
-                          }
+                          "type": "SYMBOL",
+                          "name": "expression_"
                         },
                         {
                           "type": "STRING",
@@ -2906,12 +2902,8 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "FIELD",
-                  "name": "value",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "arrow_expression_clause"
-                  }
+                  "type": "SYMBOL",
+                  "name": "arrow_expression_clause"
                 },
                 {
                   "type": "STRING",
@@ -5655,12 +5647,8 @@
                   "value": "("
                 },
                 {
-                  "type": "FIELD",
-                  "name": "value",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "expression_"
-                  }
+                  "type": "SYMBOL",
+                  "name": "expression_"
                 },
                 {
                   "type": "STRING",
@@ -5669,12 +5657,8 @@
               ]
             },
             {
-              "type": "FIELD",
-              "name": "value",
-              "content": {
-                "type": "SYMBOL",
-                "name": "tuple_expression"
-              }
+              "type": "SYMBOL",
+              "name": "tuple_expression"
             }
           ]
         },

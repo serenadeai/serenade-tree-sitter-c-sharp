@@ -511,10 +511,10 @@ module.exports = grammar({
       choice(
         seq(
           field('accessors', $.accessor_list),
-          optional(seq('=', field('value', $.expression_), ';'))
+          optional(seq('=', $.expression_, ';'))
         ), // grammar.txt does not allow bodyless properties.
         seq(
-          field('value', $.arrow_expression_clause),
+          $.arrow_expression_clause,
           ';'
         )
       ),
@@ -919,10 +919,10 @@ module.exports = grammar({
       choice(
         seq(
           '(',
-          field('value', $.expression_),
+          $.expression_, // value
           ')',
         ),
-        field('value', $.tuple_expression)
+        $.tuple_expression // value
       ),
       field('body', $.switch_body)
     ),
