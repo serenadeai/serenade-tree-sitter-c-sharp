@@ -795,6 +795,14 @@
         ]
       }
     },
+    "await_modifier": {
+      "type": "FIELD",
+      "name": "modifier",
+      "content": {
+        "type": "STRING",
+        "value": "await"
+      }
+    },
     "async_modifier": {
       "type": "FIELD",
       "name": "modifier",
@@ -5137,11 +5145,19 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "STRING",
-              "value": "await"
+              "type": "FIELD",
+              "name": "modifier_list",
+              "content": {
+                "type": "SYMBOL",
+                "name": "await_modifier"
+              }
             },
             {
-              "type": "BLANK"
+              "type": "FIELD",
+              "name": "modifier_list",
+              "content": {
+                "type": "BLANK"
+              }
             }
           ]
         },

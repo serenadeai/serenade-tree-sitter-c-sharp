@@ -536,6 +536,22 @@
     }
   },
   {
+    "type": "await_modifier",
+    "named": true,
+    "fields": {
+      "modifier": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "await",
+            "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "base_expression",
     "named": true,
     "fields": {}
@@ -2899,6 +2915,16 @@
           {
             "type": "in",
             "named": false
+          }
+        ]
+      },
+      "modifier_list": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "await_modifier",
+            "named": true
           }
         ]
       }

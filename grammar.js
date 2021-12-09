@@ -233,6 +233,7 @@ module.exports = grammar({
       ';'
     )),
 
+    await_modifier: $ => field('modifier', 'await'),
     async_modifier: $ => field('modifier', 'async'),
     static_modifier: $ => field('modifier', 'static'), 
   
@@ -829,7 +830,7 @@ module.exports = grammar({
     ), 
 
     for_each_clause: $ => seq(
-      optional('await'),
+      optional_with_placeholder('modifier_list', $.await_modifier),
       'foreach',
       '(',
       $.block_iterator,
