@@ -53,9 +53,9 @@ module.exports = grammar({
     [$.nullable_type, $.as_expression, $.type_pattern],
 
     [$._name, $.expression_],
-    [$._simple_name, $.type_parameter],
-    [$._simple_name, $.generic_name],
-    [$._simple_name, $.constructor_declaration],
+    [$.simple_name_, $.type_parameter],
+    [$.simple_name_, $.generic_name],
+    [$.simple_name_, $.constructor_declaration],
 
     [$.qualified_name, $.explicit_interface_specifier],
     [$.qualified_name, $.member_access_expression],
@@ -69,7 +69,7 @@ module.exports = grammar({
     [$.type, $.stack_alloc_array_creation_expression],
 
     [$.parameter_modifier, $.this_expression],
-    [$.parameter, $._simple_name],
+    [$.parameter, $.simple_name_],
     [$.parameter, $.tuple_element],
     [$.parameter, $.tuple_element, $.declaration_expression],
     [$.parameter, $.pattern_],
@@ -159,12 +159,12 @@ module.exports = grammar({
     _name: $ => choice(
       $.alias_qualified_name,
       $.qualified_name,
-      $._simple_name
+      $.simple_name_
     ),
 
-    alias_qualified_name: $ => seq($._identifier_or_global, '::', $._simple_name),
+    alias_qualified_name: $ => seq($._identifier_or_global, '::', $.simple_name_),
 
-    _simple_name: $ => choice(
+    simple_name_: $ => choice(
       $.generic_name,
       $._identifier_or_global
     ),
@@ -182,7 +182,7 @@ module.exports = grammar({
       '>'
     ),
 
-    qualified_name: $ => prec(PREC.DOT, seq($._name, '.', $._simple_name)),
+    qualified_name: $ => prec(PREC.DOT, seq($._name, '.', $.simple_name_)),
 
     attribute_list: $ => seq(
       '[',
@@ -1304,12 +1304,12 @@ module.exports = grammar({
     member_access_expression: $ => prec(PREC.DOT, seq(
       field('expression', choice($.expression_, $.predefined_type, $._name)),
       choice('.', '->'),
-      field('name', $._simple_name)
+      field('name', $.simple_name_)
     )),
 
     member_binding_expression: $ => seq(
       '.',
-      field('name', $._simple_name),
+      field('name', $.simple_name_),
     ),
 
     object_creation_expression: $ => prec.right(seq(
@@ -1534,7 +1534,7 @@ module.exports = grammar({
       $.type_of_expression,
       $.with_expression,
 
-      $._simple_name,
+      $.simple_name_,
       $._literal
     ),
 

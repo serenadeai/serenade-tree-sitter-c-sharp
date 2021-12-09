@@ -63,15 +63,15 @@
       "required": true,
       "types": [
         {
-          "type": "generic_name",
-          "named": true
-        },
-        {
           "type": "global",
           "named": true
         },
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "simple_name_",
           "named": true
         }
       ]
@@ -424,19 +424,11 @@
             "named": true
           },
           {
-            "type": "generic_name",
-            "named": true
-          },
-          {
-            "type": "global",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
             "type": "qualified_name",
+            "named": true
+          },
+          {
+            "type": "simple_name_",
             "named": true
           }
         ]
@@ -1031,18 +1023,6 @@
           "named": true
         },
         {
-          "type": "generic_name",
-          "named": true
-        },
-        {
-          "type": "global",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "implicit_array_creation_expression",
           "named": true
         },
@@ -1132,6 +1112,10 @@
         },
         {
           "type": "ref_value_expression",
+          "named": true
+        },
+        {
+          "type": "simple_name_",
           "named": true
         },
         {
@@ -2282,19 +2266,11 @@
           "named": true
         },
         {
-          "type": "generic_name",
-          "named": true
-        },
-        {
-          "type": "global",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "simple_name_",
           "named": true
         }
       ]
@@ -2374,18 +2350,6 @@
         },
         {
           "type": "element_binding_expression",
-          "named": true
-        },
-        {
-          "type": "generic_name",
-          "named": true
-        },
-        {
-          "type": "global",
-          "named": true
-        },
-        {
-          "type": "identifier",
           "named": true
         },
         {
@@ -2478,6 +2442,10 @@
         },
         {
           "type": "ref_value_expression",
+          "named": true
+        },
+        {
+          "type": "simple_name_",
           "named": true
         },
         {
@@ -3813,23 +3781,15 @@
             "named": true
           },
           {
-            "type": "generic_name",
-            "named": true
-          },
-          {
-            "type": "global",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
             "type": "predefined_type",
             "named": true
           },
           {
             "type": "qualified_name",
+            "named": true
+          },
+          {
+            "type": "simple_name_",
             "named": true
           }
         ]
@@ -3839,15 +3799,7 @@
         "required": true,
         "types": [
           {
-            "type": "generic_name",
-            "named": true
-          },
-          {
-            "type": "global",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "simple_name_",
             "named": true
           }
         ]
@@ -3863,15 +3815,7 @@
         "required": true,
         "types": [
           {
-            "type": "generic_name",
-            "named": true
-          },
-          {
-            "type": "global",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "simple_name_",
             "named": true
           }
         ]
@@ -4052,19 +3996,11 @@
             "named": true
           },
           {
-            "type": "generic_name",
-            "named": true
-          },
-          {
-            "type": "global",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
             "type": "qualified_name",
+            "named": true
+          },
+          {
+            "type": "simple_name_",
             "named": true
           }
         ]
@@ -4974,19 +4910,11 @@
           "named": true
         },
         {
-          "type": "generic_name",
-          "named": true
-        },
-        {
-          "type": "global",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "simple_name_",
           "named": true
         }
       ]
@@ -5364,6 +5292,29 @@
       "types": [
         {
           "type": "expression_",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "simple_name_",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "generic_name",
+          "named": true
+        },
+        {
+          "type": "global",
           "named": true
         },
         {
@@ -5951,18 +5902,6 @@
           "named": true
         },
         {
-          "type": "generic_name",
-          "named": true
-        },
-        {
-          "type": "global",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "implicit_type",
           "named": true
         },
@@ -5980,6 +5919,10 @@
         },
         {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "simple_name_",
           "named": true
         },
         {
@@ -6202,23 +6145,15 @@
           "named": true
         },
         {
-          "type": "generic_name",
-          "named": true
-        },
-        {
-          "type": "global",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
           "type": "name_equals",
           "named": true
         },
         {
           "type": "qualified_name",
+          "named": true
+        },
+        {
+          "type": "simple_name_",
           "named": true
         },
         {
