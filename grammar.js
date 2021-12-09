@@ -72,7 +72,7 @@ module.exports = grammar({
     [$.parameter, $._simple_name],
     [$.parameter, $.tuple_element],
     [$.parameter, $.tuple_element, $.declaration_expression],
-    [$.parameter, $._pattern],
+    [$.parameter, $.pattern_],
     [$.parameter, $.declaration_expression],
     [$.tuple_element],
     [$.tuple_element, $.declaration_expression],
@@ -944,12 +944,12 @@ module.exports = grammar({
 
     case_pattern_switch_label: $ => seq(
       'case',
-      $._pattern,
+      $.pattern_,
       optional($.when_clause),
       ':'
     ),
 
-    _pattern: $ => choice(
+    pattern_: $ => choice(
       $.constant_pattern,
       $.declaration_pattern,
       $.discard,
@@ -964,7 +964,7 @@ module.exports = grammar({
 
     type_pattern: $ => prec(PREC.TYPE_PATTERN, $.type),
 
-    parenthesized_pattern: $ => seq('(', $._pattern, ')'),
+    parenthesized_pattern: $ => seq('(', $.pattern_, ')'),
 
     relational_pattern: $ => prec.left(choice(
       seq('<', $.expression_),
@@ -973,18 +973,18 @@ module.exports = grammar({
       seq('>=', $.expression_)
     )),
 
-    negated_pattern: $ => seq('not', $._pattern),
+    negated_pattern: $ => seq('not', $.pattern_),
 
     binary_pattern: $ => choice(
       prec.left(PREC.AND, seq(
-        field('left', $._pattern),
+        field('left', $.pattern_),
         field('operator', 'and'),
-        field('right', $._pattern)
+        field('right', $.pattern_)
       )),
       prec.left(PREC.OR, seq(
-        field('left', $._pattern),
+        field('left', $.pattern_),
         field('operator', 'or'),
-        field('right', $._pattern)
+        field('right', $.pattern_)
       )),
     ),
 
@@ -1029,7 +1029,7 @@ module.exports = grammar({
 
     subpattern: $ => seq(
       optional($.name_colon),
-      $._pattern
+      $.pattern_
     ),
 
     property_pattern_clause: $ => prec(1, seq(
@@ -1291,7 +1291,7 @@ module.exports = grammar({
     is_pattern_expression: $ => prec.left(PREC.EQUAL, seq(
       field('expression', $.expression_),
       'is',
-      field('pattern', $._pattern)
+      field('pattern', $.pattern_)
     )),
 
     make_ref_expression: $ => seq(
@@ -1461,7 +1461,7 @@ module.exports = grammar({
     )),
 
     switch_expression_arm: $ => seq(
-      $._pattern,
+      $.pattern_,
       optional($.when_clause),
       '=>',
       $.expression_
@@ -1770,9 +1770,9 @@ module.exports = grammar({
 
     define_directive: $ => seq('define', $.identifier),
     undef_directive: $ => seq('undef', $.identifier),
-    if_directive: $ => seq('if', $._preproc_expression),
+    if_directive: $ => seq('if', $.preproc_expression_),
     else_directive: $ => 'else',
-    elif_directive: $ => seq('elif', $._preproc_expression),
+    elif_directive: $ => seq('elif', $.preproc_expression_),
     endif_directive: $ => 'endif',
     region_directive: $ => seq('region', optional($.preproc_message)),
     endregion_directive: $ => seq('endregion', optional($.preproc_message)),
@@ -1802,7 +1802,7 @@ module.exports = grammar({
     preproc_integer_literal: $ => /[0-9]+/,
     preproc_string_literal: $ => /"[^"]*"/,
 
-    _preproc_expression: $ => choice(
+    preproc_expression_: $ => choice(
       $.identifier,
       $.boolean_literal,
       alias($.preproc_integer_literal, $.integer_literal),
@@ -1814,13 +1814,13 @@ module.exports = grammar({
 
     preproc_parenthesized_expression: $ => seq(
       '(',
-      $._preproc_expression,
+      $.preproc_expression_,
       ')'
     ),
 
     preproc_unary_expression: $ => prec.left(PREC.UNARY, seq(
       field('operator', '!'),
-      field('argument', $._preproc_expression)
+      field('argument', $.preproc_expression_)
     )),
 
     preproc_binary_expression: $ => {
@@ -1833,9 +1833,9 @@ module.exports = grammar({
 
       return choice(...table.map(([operator, precedence]) => {
         return prec.left(precedence, seq(
-          field('left', $._preproc_expression),
+          field('left', $.preproc_expression_),
           field('operator', operator),
-          field('right', $._preproc_expression)
+          field('right', $.preproc_expression_)
         ))
       }));
     },
