@@ -1255,7 +1255,10 @@ module.exports = grammar({
           ),
           choice($.parameter_block, field('parameter', $.identifier)),
           '=>',
-          choice($.enclosed_body, field('return_value', $.expression_))
+          choice(
+            prec.dynamic(1, $.enclosed_body),
+            field('return_value', $.expression_)
+          )
         )
       ),
 
