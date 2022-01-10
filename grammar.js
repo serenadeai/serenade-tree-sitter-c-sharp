@@ -518,10 +518,18 @@ module.exports = grammar({
         field('type_optional', $.type),
         optional($.explicit_interface_specifier),
         field('name', $.identifier),
-        choice(field('accessors', $.accessor_list), ';')
+        choice(field('accessors', $.accessor_list_with_braces), ';')
       ),
 
-    accessor_list: $ => seq('{', repeat($.accessor_declaration), '}'),
+    accessor_list_with_braces: $ =>
+      seq(
+        '{',
+        optional_with_placeholder(
+          'accessor_list',
+          repeat($.accessor_declaration)
+        ),
+        '}'
+      ),
 
     accessor_declaration: $ =>
       seq(
@@ -546,7 +554,7 @@ module.exports = grammar({
         'this',
         field('parameters', $.bracketed_parameter_list),
         choice(
-          field('accessors', $.accessor_list),
+          field('accessors', $.accessor_list_with_braces),
           seq(field('value', $.arrow_expression_clause), ';')
         )
       ),
@@ -565,7 +573,7 @@ module.exports = grammar({
         field('name', $.identifier),
         choice(
           seq(
-            field('accessors', $.accessor_list),
+            field('accessors', $.accessor_list_with_braces),
             optional(seq('=', $.expression_, ';'))
           ), // grammar.txt does not allow bodyless properties.
           seq($.arrow_expression_clause, ';')
