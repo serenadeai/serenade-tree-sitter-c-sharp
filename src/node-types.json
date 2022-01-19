@@ -40,18 +40,19 @@
     }
   },
   {
-    "type": "accessor_list",
+    "type": "accessor_list_with_braces",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "accessor_declaration",
-          "named": true
-        }
-      ]
+    "fields": {
+      "accessor_list": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "accessor_declaration",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2160,7 +2161,7 @@
         "required": false,
         "types": [
           {
-            "type": "accessor_list",
+            "type": "accessor_list_with_braces",
             "named": true
           }
         ]
@@ -3078,7 +3079,7 @@
         "required": false,
         "types": [
           {
-            "type": "accessor_list",
+            "type": "accessor_list_with_braces",
             "named": true
           }
         ]
@@ -4811,7 +4812,7 @@
         "required": false,
         "types": [
           {
-            "type": "accessor_list",
+            "type": "accessor_list_with_braces",
             "named": true
           }
         ]
