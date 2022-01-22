@@ -1047,10 +1047,10 @@ module.exports = grammar({
         choice(
           seq(
             '(',
-            $.expression_, // value
+            $.condition,
             ')'
           ),
-          $.tuple_expression // value
+          $.tuple_expression
         ),
         field('body', $.switch_body)
       ),
