@@ -160,7 +160,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "namespace_declaration"
+            "name": "namespace"
           },
           {
             "type": "SYMBOL",
@@ -193,7 +193,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "namespace_declaration"
+            "name": "namespace"
           },
           {
             "type": "SYMBOL",
@@ -4118,7 +4118,7 @@
         }
       ]
     },
-    "namespace_declaration": {
+    "namespace": {
       "type": "SEQ",
       "members": [
         {
@@ -4135,10 +4135,10 @@
         },
         {
           "type": "FIELD",
-          "name": "body",
+          "name": "enclosed_body",
           "content": {
             "type": "SYMBOL",
-            "name": "declaration_list"
+            "name": "namespace_member_block"
           }
         },
         {
@@ -4152,6 +4152,42 @@
               "type": "BLANK"
             }
           ]
+        }
+      ]
+    },
+    "namespace_member_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "namespace_member_list",
+              "content": {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "declaration_"
+                }
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "namespace_member_list",
+              "content": {
+                "type": "BLANK"
+              }
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },
@@ -5664,7 +5700,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "expression_"
+                  "name": "condition"
                 },
                 {
                   "type": "STRING",

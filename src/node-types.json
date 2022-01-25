@@ -1634,7 +1634,7 @@
             "named": true
           },
           {
-            "type": "namespace_declaration",
+            "type": "namespace",
             "named": true
           },
           {
@@ -3975,15 +3975,15 @@
     }
   },
   {
-    "type": "namespace_declaration",
+    "type": "namespace",
     "named": true,
     "fields": {
-      "body": {
+      "enclosed_body": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "declaration_list",
+            "type": "namespace_member_block",
             "named": true
           }
         ]
@@ -4002,6 +4002,22 @@
           },
           {
             "type": "simple_name_",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "namespace_member_block",
+    "named": true,
+    "fields": {
+      "namespace_member_list": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "declaration_",
             "named": true
           }
         ]
@@ -4033,7 +4049,7 @@
             "named": true
           },
           {
-            "type": "namespace_declaration",
+            "type": "namespace",
             "named": true
           },
           {
@@ -5686,7 +5702,7 @@
       "required": true,
       "types": [
         {
-          "type": "expression_",
+          "type": "condition",
           "named": true
         },
         {

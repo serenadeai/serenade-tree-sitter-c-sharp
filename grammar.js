@@ -119,7 +119,7 @@ module.exports = grammar({
           $.indexer_declaration,
           $.interface,
           $.method,
-          $.namespace_declaration,
+          $.namespace,
           $.operator_declaration,
           $.property_declaration,
           $.record_declaration,
@@ -129,7 +129,7 @@ module.exports = grammar({
       ),
 
     namespace_member_declaration: $ =>
-      field('statement', choice($.namespace_declaration, $._type_declaration)),
+      field('statement', choice($.namespace, $._type_declaration)),
 
     _type_declaration: $ =>
       choice(
@@ -656,7 +656,6 @@ module.exports = grammar({
         '}'
       ),
 
-    // Copy of declaration_list, since we need to rename the inner children.
     declaration_list: $ =>
       seq(
         '{',
@@ -758,12 +757,22 @@ module.exports = grammar({
 
     _record_body: $ => choice($.declaration_list, ';'),
 
-    namespace_declaration: $ =>
+    namespace: $ =>
       seq(
         'namespace',
         field('name', $._name),
-        field('body', $.declaration_list),
+        field('enclosed_body', $.namespace_member_block),
         optional(';')
+      ),
+
+    namespace_member_block: $ =>
+      seq(
+        '{',
+        optional_with_placeholder(
+          'namespace_member_list',
+          repeat($.declaration_)
+        ),
+        '}'
       ),
 
     type: $ =>
@@ -1044,14 +1053,7 @@ module.exports = grammar({
     switch_statement: $ =>
       seq(
         'switch',
-        choice(
-          seq(
-            '(',
-            $.condition,
-            ')'
-          ),
-          $.tuple_expression
-        ),
+        choice(seq('(', $.condition, ')'), $.tuple_expression),
         field('body', $.switch_body)
       ),
 
