@@ -37,7 +37,7 @@ module.exports = grammar({
   externals: $ => [$._preproc_directive_end],
 
   conflicts: $ => [
-    [$.enclosed_body, $.initializer_expression],
+    [$.enclosed_body, $.initializer_expression_block],
 
     [$.event_declaration, $.assignment],
 
@@ -758,22 +758,7 @@ module.exports = grammar({
     _record_body: $ => choice($.declaration_list, ';'),
 
     namespace: $ =>
-      seq(
-        'namespace',
-        field('name', $._name),
-        field('enclosed_body', $.namespace_member_block),
-        optional(';')
-      ),
-
-    namespace_member_block: $ =>
-      seq(
-        '{',
-        optional_with_placeholder(
-          'namespace_member_list',
-          repeat($.declaration_)
-        ),
-        '}'
-      ),
+      seq('namespace', field('name', $._name), $.enclosed_body, optional(';')),
 
     type: $ =>
       choice(
@@ -1282,7 +1267,11 @@ module.exports = grammar({
       ),
 
     implicit_object_creation_expression: $ =>
-      seq('new', $.argument_list_parens, optional($.initializer_expression)),
+      seq(
+        'new',
+        $.argument_list_parens,
+        optional($.initializer_expression_block)
+      ),
 
     _anonymous_object_member_declarator: $ =>
       choice(
@@ -1293,11 +1282,19 @@ module.exports = grammar({
     array_creation_expression: $ =>
       prec.dynamic(
         PREC.UNARY,
-        seq('new', $.array_type, optional($.initializer_expression))
+        seq('new', $.array_type, optional($.initializer_expression_block))
       ),
 
-    initializer_expression: $ =>
-      seq('{', commaSep($.expression_), optional(','), '}'),
+    initializer_expression_block: $ =>
+      seq(
+        '{',
+        optional_with_placeholder(
+          'initializer_expression_list',
+          commaSep(alias($.expression_, $.initializer_expression))
+        ),
+        optional(','),
+        '}'
+      ),
 
     assignment_expression: $ =>
       prec.right(
@@ -1385,10 +1382,10 @@ module.exports = grammar({
     element_binding_expression: $ => $.bracketed_argument_list,
 
     implicit_array_creation_expression: $ =>
-      seq('new', '[', repeat(','), ']', $.initializer_expression),
+      seq('new', '[', repeat(','), ']', $.initializer_expression_block),
 
     implicit_stack_alloc_array_creation_expression: $ =>
-      seq('stackalloc', '[', ']', $.initializer_expression),
+      seq('stackalloc', '[', ']', $.initializer_expression_block),
 
     base_expression: $ => 'base',
 
@@ -1474,7 +1471,7 @@ module.exports = grammar({
           'new',
           field('type_optional', $.type),
           optional(field('arguments', $.argument_list_parens)),
-          optional(field('initializer', $.initializer_expression))
+          optional(field('initializer', $.initializer_expression_block))
         )
       ),
 
@@ -1580,7 +1577,7 @@ module.exports = grammar({
     size_of_expression: $ => seq('sizeof', '(', $.type, ')'),
 
     stack_alloc_array_creation_expression: $ =>
-      seq('stackalloc', $.array_type, optional($.initializer_expression)),
+      seq('stackalloc', $.array_type, optional($.initializer_expression_block)),
 
     switch_expression: $ =>
       prec(
@@ -1641,7 +1638,7 @@ module.exports = grammar({
         $.implicit_array_creation_expression,
         $.implicit_object_creation_expression,
         $.implicit_stack_alloc_array_creation_expression,
-        $.initializer_expression,
+        $.initializer_expression_block,
         $.interpolated_string_expression,
         $.invocation_expression,
         $.is_expression,
