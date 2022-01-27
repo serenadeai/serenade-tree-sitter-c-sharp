@@ -363,11 +363,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "type_argument_list"
+          "name": "type_arguments"
         }
       ]
     },
-    "type_argument_list": {
+    "type_arguments": {
       "type": "SEQ",
       "members": [
         {
@@ -375,41 +375,55 @@
           "value": "<"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "STRING",
-                "value": ","
-              }
-            },
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "type"
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": ","
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "type"
-                      }
-                    ]
-                  }
+          "type": "FIELD",
+          "name": "type_argument_list",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "STRING",
+                  "value": ","
                 }
-              ]
-            }
-          ]
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "type"
+                    },
+                    "named": true,
+                    "value": "type_argument"
+                  },
+                  {
+                    "type": "REPEAT",
+                    "content": {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": ","
+                        },
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "SYMBOL",
+                            "name": "type"
+                          },
+                          "named": true,
+                          "value": "type_argument"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
         },
         {
           "type": "STRING",
@@ -1968,7 +1982,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "type_parameter_list"
+              "name": "type_parameters"
             },
             {
               "type": "BLANK"
@@ -2030,7 +2044,7 @@
         ]
       }
     },
-    "type_parameter_list": {
+    "type_parameters": {
       "type": "SEQ",
       "members": [
         {
@@ -2038,29 +2052,33 @@
           "value": "<"
         },
         {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "type_parameter"
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "type_parameter"
-                  }
-                ]
+          "type": "FIELD",
+          "name": "type_parameter_list",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "type_parameter"
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "type_parameter"
+                    }
+                  ]
+                }
               }
-            }
-          ]
+            ]
+          }
         },
         {
           "type": "STRING",
@@ -3296,7 +3314,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "type_parameter_list"
+              "name": "type_parameters"
             },
             {
               "type": "BLANK"
@@ -3539,7 +3557,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "type_parameter_list"
+              "name": "type_parameters"
             },
             {
               "type": "BLANK"
@@ -3674,7 +3692,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "type_parameter_list"
+              "name": "type_parameters"
             },
             {
               "type": "BLANK"
@@ -3817,7 +3835,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "type_parameter_list"
+              "name": "type_parameters"
             },
             {
               "type": "BLANK"
@@ -3924,7 +3942,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "type_parameter_list"
+              "name": "type_parameters"
             },
             {
               "type": "BLANK"
@@ -5538,7 +5556,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "type_parameter_list"
+              "name": "type_parameters"
             },
             {
               "type": "BLANK"

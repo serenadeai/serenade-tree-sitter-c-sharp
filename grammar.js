@@ -161,12 +161,19 @@ module.exports = grammar({
 
     simple_name_: $ => choice($.generic_name, $._identifier_or_global),
 
-    generic_name: $ => seq($.identifier, $.type_argument_list),
+    generic_name: $ => seq($.identifier, $.type_arguments),
 
     // Intentionally different from Roslyn to avoid non-matching
     // omitted_type_argument in a lot of unnecessary places.
-    type_argument_list: $ =>
-      seq('<', choice(repeat(','), commaSep1($.type)), '>'),
+    type_arguments: $ =>
+      seq(
+        '<',
+        field(
+          'type_argument_list',
+          choice(repeat(','), commaSep1(alias($.type, $.type_argument)))
+        ),
+        '>'
+      ),
 
     qualified_name: $ => prec(PREC.DOT, seq($._name, '.', $.simple_name_)),
 
@@ -419,7 +426,7 @@ module.exports = grammar({
           'identifier',
           seq(optional($.explicit_interface_specifier), $.identifier)
         ),
-        optional($.type_parameter_list),
+        optional($.type_parameters),
         field('parameters', $.parameter_block),
         optional_with_placeholder(
           'type_parameter_constraint_list_optional',
@@ -430,7 +437,8 @@ module.exports = grammar({
 
     explicit_interface_specifier: $ => prec(PREC.DOT, seq($._name, '.')),
 
-    type_parameter_list: $ => seq('<', commaSep1($.type_parameter), '>'),
+    type_parameters: $ =>
+      seq('<', field('type_parameter_list', commaSep1($.type_parameter)), '>'),
 
     type_parameter: $ =>
       seq(
@@ -629,7 +637,7 @@ module.exports = grammar({
         optional_with_placeholder('modifier_list', repeat($.modifier)),
         'class',
         field('name', $.identifier),
-        optional($.type_parameter_list),
+        optional($.type_parameters),
         optional_with_placeholder('extends_list_optional', $.base_list),
         optional_with_placeholder(
           'type_parameter_constraint_list_optional',
@@ -675,7 +683,7 @@ module.exports = grammar({
         optional_with_placeholder('modifier_list', repeat($.modifier)),
         'interface',
         field('name', $.identifier),
-        optional($.type_parameter_list),
+        optional($.type_parameters),
         optional_with_placeholder('extends_list_optional', $.base_list),
         optional_with_placeholder(
           'type_parameter_constraint_list_optional',
@@ -694,7 +702,7 @@ module.exports = grammar({
         optional_with_placeholder('modifier_list', repeat($.modifier)),
         'struct',
         field('name', $.identifier),
-        optional($.type_parameter_list),
+        optional($.type_parameters),
         optional_with_placeholder('extends_list_optional', $.base_list),
         optional_with_placeholder(
           'type_parameter_constraint_list_optional',
@@ -714,7 +722,7 @@ module.exports = grammar({
         'delegate',
         field('type_optional', $.return_type),
         field('name', $.identifier),
-        optional($.type_parameter_list),
+        optional($.type_parameters),
         field('parameters', $.parameter_block),
         optional_with_placeholder(
           'type_parameter_constraint_list_optional',
@@ -732,7 +740,7 @@ module.exports = grammar({
         optional_with_placeholder('modifier_list', repeat($.modifier)),
         'record',
         field('name', $.identifier),
-        optional($.type_parameter_list),
+        optional($.type_parameters),
         optional(field('parameters', $.parameter_block)),
         optional(field('bases', alias($.record_base, $.base_list))),
         optional_with_placeholder(
@@ -1015,7 +1023,7 @@ module.exports = grammar({
         optional_with_placeholder('modifier_list', repeat($.modifier)),
         field('type_optional', $.return_type),
         field('name', $.identifier),
-        optional($.type_parameter_list),
+        optional($.type_parameters),
         field('parameters', $.parameter_block),
         optional_with_placeholder(
           'type_parameter_constraint_list_optional',
