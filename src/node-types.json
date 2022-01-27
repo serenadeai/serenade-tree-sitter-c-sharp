@@ -1650,7 +1650,7 @@
             "named": true
           },
           {
-            "type": "struct_declaration",
+            "type": "struct",
             "named": true
           },
           {
@@ -4198,6 +4198,16 @@
     "type": "namespace",
     "named": true,
     "fields": {
+      "enclosed_body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "declaration_list",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -4216,16 +4226,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "enclosed_body",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -4261,7 +4261,7 @@
             "named": true
           },
           {
-            "type": "struct_declaration",
+            "type": "struct",
             "named": true
           }
         ]
@@ -5708,7 +5708,7 @@
     }
   },
   {
-    "type": "struct_declaration",
+    "type": "struct",
     "named": true,
     "fields": {
       "attribute_list_placeholder": {

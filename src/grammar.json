@@ -176,7 +176,7 @@
           },
           {
             "type": "SYMBOL",
-            "name": "struct_declaration"
+            "name": "struct"
           },
           {
             "type": "SYMBOL",
@@ -211,7 +211,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "struct_declaration"
+          "name": "struct"
         },
         {
           "type": "SYMBOL",
@@ -3626,7 +3626,7 @@
         }
       ]
     },
-    "struct_declaration": {
+    "struct": {
       "type": "SEQ",
       "members": [
         {
@@ -4152,8 +4152,12 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "enclosed_body"
+          "type": "FIELD",
+          "name": "enclosed_body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "declaration_list"
+          }
         },
         {
           "type": "CHOICE",

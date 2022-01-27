@@ -123,7 +123,7 @@ module.exports = grammar({
           $.operator_declaration,
           $.property_declaration,
           $.record_declaration,
-          $.struct_declaration,
+          $.struct,
           $.using
         )
       ),
@@ -134,7 +134,7 @@ module.exports = grammar({
     _type_declaration: $ =>
       choice(
         $.class,
-        $.struct_declaration,
+        $.struct,
         $.interface,
         $.enum,
         $.delegate_declaration,
@@ -693,7 +693,7 @@ module.exports = grammar({
         optional(';')
       ),
 
-    struct_declaration: $ =>
+    struct: $ =>
       seq(
         optional_with_placeholder(
           'attribute_list_placeholder',
@@ -766,7 +766,12 @@ module.exports = grammar({
     _record_body: $ => choice($.declaration_list, ';'),
 
     namespace: $ =>
-      seq('namespace', field('name', $._name), $.enclosed_body, optional(';')),
+      seq(
+        'namespace',
+        field('name', $._name),
+        field('enclosed_body', $.declaration_list),
+        optional(';')
+      ),
 
     type: $ =>
       choice(
