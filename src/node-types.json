@@ -1953,7 +1953,7 @@
     "type": "default_case",
     "named": true,
     "fields": {
-      "case_statement_list": {
+      "statement_list": {
         "multiple": true,
         "required": false,
         "types": [
@@ -4981,7 +4981,7 @@
     "type": "pattern_case",
     "named": true,
     "fields": {
-      "case_statement_list": {
+      "statement_list": {
         "multiple": true,
         "required": false,
         "types": [
@@ -5826,7 +5826,7 @@
     "type": "standard_case",
     "named": true,
     "fields": {
-      "case_statement_list": {
+      "statement_list": {
         "multiple": true,
         "required": false,
         "types": [
