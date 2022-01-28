@@ -637,7 +637,10 @@ module.exports = grammar({
         optional_with_placeholder('modifier_list', repeat($.modifier)),
         'class',
         field('name', $.identifier),
-        optional($.type_parameters),
+        optional_with_placeholder(
+          'type_parameter_list_optional',
+          $.type_parameters
+        ),
         optional_with_placeholder('extends_list_optional', $.base_list),
         optional_with_placeholder(
           'type_parameter_constraint_list_optional',

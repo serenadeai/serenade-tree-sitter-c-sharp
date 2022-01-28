@@ -3313,11 +3313,19 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "type_parameters"
+              "type": "FIELD",
+              "name": "type_parameter_list_optional",
+              "content": {
+                "type": "SYMBOL",
+                "name": "type_parameters"
+              }
             },
             {
-              "type": "BLANK"
+              "type": "FIELD",
+              "name": "type_parameter_list_optional",
+              "content": {
+                "type": "BLANK"
+              }
             }
           ]
         },

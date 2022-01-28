@@ -1311,17 +1311,17 @@
             "named": true
           }
         ]
+      },
+      "type_parameter_list_optional": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type_parameters",
+            "named": true
+          }
+        ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "type_parameters",
-          "named": true
-        }
-      ]
     }
   },
   {
