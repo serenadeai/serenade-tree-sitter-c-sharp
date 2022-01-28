@@ -4853,7 +4853,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "switch_statement"
+          "name": "switch"
         },
         {
           "type": "SYMBOL",
@@ -5707,7 +5707,11 @@
       "type": "SYMBOL",
       "name": "expression_"
     },
-    "switch_statement": {
+    "condition_optional": {
+      "type": "SYMBOL",
+      "name": "condition"
+    },
+    "switch": {
       "type": "SEQ",
       "members": [
         {
@@ -5726,7 +5730,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "condition"
+                  "name": "condition_optional"
                 },
                 {
                   "type": "STRING",
@@ -5741,78 +5745,206 @@
           ]
         },
         {
-          "type": "FIELD",
-          "name": "body",
-          "content": {
-            "type": "SYMBOL",
-            "name": "switch_body"
-          }
-        }
-      ]
-    },
-    "switch_body": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "switch_section"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
-    "switch_section": {
-      "type": "PREC_LEFT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "REPEAT1",
-            "content": {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "{"
+            },
+            {
               "type": "CHOICE",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "case_switch_label"
+                  "type": "FIELD",
+                  "name": "switch_case_list",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "switch_case_list"
+                  }
                 },
                 {
-                  "type": "SYMBOL",
-                  "name": "case_pattern_switch_label"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "default_switch_label"
+                  "type": "FIELD",
+                  "name": "switch_case_list",
+                  "content": {
+                    "type": "BLANK"
+                  }
                 }
               ]
+            },
+            {
+              "type": "STRING",
+              "value": "}"
             }
+          ]
+        }
+      ]
+    },
+    "switch_case_list": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "case"
           },
           {
-            "type": "REPEAT1",
-            "content": {
-              "type": "SYMBOL",
-              "name": "statement"
-            }
+            "type": "SYMBOL",
+            "name": "default_case"
           }
         ]
       }
     },
-    "case_pattern_switch_label": {
+    "case": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "pattern_case"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "standard_case"
+        }
+      ]
+    },
+    "standard_case": {
+      "type": "PREC_LEFT",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "case"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "expression_"
+            },
+            "named": true,
+            "value": "condition"
+          },
+          {
+            "type": "STRING",
+            "value": ":"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "case_statement_list",
+                "content": {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "statement"
+                  }
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "case_statement_list",
+                "content": {
+                  "type": "BLANK"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "pattern_case": {
       "type": "SEQ",
       "members": [
         {
           "type": "STRING",
           "value": "case"
         },
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "pattern_case_condition"
+          },
+          "named": true,
+          "value": "condition"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "case_statement_list",
+              "content": {
+                "type": "REPEAT",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "statement"
+                }
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "case_statement_list",
+              "content": {
+                "type": "BLANK"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "default_case": {
+      "type": "PREC_LEFT",
+      "value": 1,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "default"
+          },
+          {
+            "type": "STRING",
+            "value": ":"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "case_statement_list",
+                "content": {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "statement"
+                  }
+                }
+              },
+              {
+                "type": "FIELD",
+                "name": "case_statement_list",
+                "content": {
+                  "type": "BLANK"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "pattern_case_condition": {
+      "type": "SEQ",
+      "members": [
         {
           "type": "SYMBOL",
           "name": "pattern_"
@@ -5828,10 +5960,6 @@
               "type": "BLANK"
             }
           ]
-        },
-        {
-          "type": "STRING",
-          "value": ":"
         }
       ]
     },
@@ -6384,44 +6512,6 @@
           "name": "expression_"
         }
       ]
-    },
-    "case_switch_label": {
-      "type": "PREC_LEFT",
-      "value": 1,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "case"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expression_"
-          },
-          {
-            "type": "STRING",
-            "value": ":"
-          }
-        ]
-      }
-    },
-    "default_switch_label": {
-      "type": "PREC_LEFT",
-      "value": 1,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "default"
-          },
-          {
-            "type": "STRING",
-            "value": ":"
-          }
-        ]
-      }
     },
     "throw": {
       "type": "SEQ",
@@ -10199,7 +10289,7 @@
               },
               {
                 "type": "PATTERN",
-                "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
+                "value": "[^*]*\\*+([^\\/*][^*]*\\*+)*"
               },
               {
                 "type": "STRING",
@@ -11127,6 +11217,9 @@
     [
       "if_clause",
       "else_if_clause"
+    ],
+    [
+      "pattern_case"
     ]
   ],
   "precedences": [],
