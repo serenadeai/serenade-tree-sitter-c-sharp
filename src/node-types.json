@@ -5721,12 +5721,12 @@
           }
         ]
       },
-      "body": {
+      "enclosed_body": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "declaration_list",
+            "type": "struct_member_block",
             "named": true
           }
         ]
@@ -5781,6 +5781,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "struct_member_block",
+    "named": true,
+    "fields": {
+      "struct_member_list": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "declaration_",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {

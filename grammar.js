@@ -667,6 +667,13 @@ module.exports = grammar({
         '}'
       ),
 
+    struct_member_block: $ =>
+      seq(
+        '{',
+        optional_with_placeholder('struct_member_list', repeat($.declaration_)),
+        '}'
+      ),
+
     declaration_list: $ =>
       seq(
         '{',
@@ -711,7 +718,7 @@ module.exports = grammar({
           'type_parameter_constraint_list_optional',
           $.type_parameter_constraint_list
         ),
-        field('body', $.declaration_list),
+        field('enclosed_body', $.struct_member_block),
         optional(';')
       ),
 
