@@ -779,7 +779,7 @@ module.exports = grammar({
     namespace: $ =>
       seq(
         'namespace',
-        field('name', $._name),
+        field('identifier', $._name),
         field('enclosed_body', $.declaration_list),
         optional(';')
       ),

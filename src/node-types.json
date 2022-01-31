@@ -4431,7 +4431,7 @@
           }
         ]
       },
-      "name": {
+      "identifier": {
         "multiple": false,
         "required": true,
         "types": [
